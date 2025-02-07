@@ -10977,6 +10977,7 @@ html {
 .masthead .masthead-heading {
   font-size: 2.75rem;
   line-height: 2.75rem;
+  margin-bottom: 20px; /* Ajoute de l’espace avant l’image */
 }
 .masthead .masthead-subheading {
   font-size: 1.25rem;
@@ -10984,11 +10985,17 @@ html {
 .masthead .masthead-avatar {
   width: 15rem;
 }
+.masthead-image {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 .masthead-img {
-  max-width: 60%;
+  max-width: 80%;
   height: auto;
-  display: block;
-  margin: 20px auto;
+  border-radius: 10px; /* Ajoute des bords arrondis */
+  margin: 20px;
 }
 
 @media (min-width: 992px) {

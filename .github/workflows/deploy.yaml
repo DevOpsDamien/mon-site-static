@@ -1,0 +1,46 @@
+name: Build and Deploy to K3s
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    steps:
+    # 1) Récupérer le code du repo
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    # 2) Configurer QEMU pour build multi-arch
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
+    # 3) Configurer Buildx
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    # 4) Build + Push image sur Docker Hub
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        platforms: linux/arm64
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/mon-site:${{ github.sha }}
+        # Le 'sha' du commit est pratique pour un tag unique
+        # Credentials Docker Hub
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    # 5) Déployer sur K3s : maj du Deployment
+    - name: Deploy to K3s
+      run: |
+        # Mettre à jour l'image du déploiement
+        kubectl set image deployment/mon-site-deploy \
+          mon-site-container=${{ secrets.DOCKERHUB_USERNAME }}/mon-site:${{ github.sha }} \
+          -n default
+          
+        # Redémarrer les pods pour appliquer la mise à jour immédiatement
+        kubectl rollout restart deployment mon-site-deploy

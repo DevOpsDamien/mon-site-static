@@ -10984,11 +10984,19 @@ html {
 .masthead .masthead-avatar {
   width: 15rem;
 }
+.masthead-img {
+  max-width: 60%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+}
 
 @media (min-width: 992px) {
   .masthead {
     padding-top: calc(6rem + 104px);
     padding-bottom: 6rem;
+    background: url('assets/img/ecran.jpg') no-repeat center center;
+  background-size: cover;
   }
   .masthead .masthead-heading {
     font-size: 4rem;

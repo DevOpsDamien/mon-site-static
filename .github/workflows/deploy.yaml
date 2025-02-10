@@ -40,10 +40,7 @@ jobs:
     # 6) Déployer sur K3s : maj du Deployment
     - name: Deploy to K3s
       run: |
-        # Mettre à jour l'image du déploiement
-        kubectl set image deployment/mon-site-deploy \
-          mon-site-container=${{ secrets.DOCKERHUB_USERNAME }}/mon-site:${{ github.sha }} \
-          -n default
-          
-        # Redémarrer les pods pour appliquer la mise à jour immédiatement
-        kubectl rollout restart deployment mon-site-deploy
+        sudo kubectl set image deployment/mon-site-deploy \
+          mon-site-container=${{ secrets.DOCKERHUB_USERNAME }}/mon-site:${{ github.sha }} -n default
+        sudo kubectl rollout restart deployment mon-site-deploy
+

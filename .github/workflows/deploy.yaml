@@ -48,6 +48,6 @@ jobs:
     # 6) Déployer sur K3s : maj du Deployment
     - name: Deploy to K3s
       run: |
-        sudo kubectl --request-timeout=120s set image deployment/mon-site-deploy \
+        kubectl --request-timeout=120s set image deployment/mon-site-deploy \
           mon-site-container=${{ secrets.DOCKERHUB_USERNAME }}/mon-site:${{ github.sha }} -n default
-        sudo kubectl rollout restart deployment mon-site-deploy
+        kubectl rollout restart deployment mon-site-deploy

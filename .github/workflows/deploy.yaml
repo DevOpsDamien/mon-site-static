@@ -37,6 +37,14 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/mon-site:${{ github.sha }}
 
+    - name: Set up kubeconfig
+      run: |
+        mkdir -p $HOME/.kube
+        echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+
+    - name: Check cluster connection
+      run: kubectl cluster-info
+      
     # 6) Déployer sur K3s : maj du Deployment
     - name: Deploy to K3s
       run: |

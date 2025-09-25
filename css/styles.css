@@ -10982,8 +10982,11 @@ html {
 .masthead .masthead-subheading {
   font-size: 1.25rem;
 }
-.masthead .masthead-avatar {
-  width: 15rem;
+.masthead-avatar {
+  width: 250px;          /* largeur fixe */
+  height: 250px;         /* hauteur fixe */
+  border-radius: 50%;    /* cercle parfait */
+  object-fit: cover;     /* centre et rogne */
 }
 .masthead-image {
     position: relative;
